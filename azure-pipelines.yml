@@ -21,22 +21,4 @@ steps:
   displayName: 'Restore'
   inputs:
     command: 'restore'
-    projects: 'src/**/*.csproj'
-    feedsToUse: 'config'
-    nugetConfigPath: 'NuGet.config'
-    externalFeedCredentials: 'GitHub Package Registry'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
-    projects: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
-	
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
-  inputs:
-    command: 'test'
-    projects: |
-      tests/**/*.csproj
-    arguments: '--collect "Code coverage"'
+    projects: '**/*.csproj'
