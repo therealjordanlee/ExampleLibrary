@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+    - '*'
+  tags:
+    include: 
+    - '*'
+  pr:
+    branches:
+      include:
+      - '*'
+  schedules:
+  - cron: "0 10 * * *" # 10:00 UTC is 12 Midnight AEST
+    displayName: 'Daily Build'
+    branches:
+      include:
+      - master
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Restore'
+  inputs:
+    command: 'restore'
+    projects: 'src/**/*.csproj'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.config'
+    externalFeedCredentials: 'GitHub Package Registry'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+    projects: 'src/**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
+	
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: |
+      Tests/**/*.csproj
+    arguments: '--collect "Code coverage"'
