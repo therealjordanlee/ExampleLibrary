@@ -5,16 +5,16 @@ trigger:
   tags:
     include: 
     - '*'
-  pr:
-    branches:
-      include:
-      - '*'
-  schedules:
-  - cron: "0 10 * * *" # 10:00 UTC is 12 Midnight AEST
-    displayName: 'Daily Build'
-    branches:
-      include:
-      - master
+pr:
+  branches:
+    include:
+    - '*'
+schedules:
+- cron: "0 10 * * *" # 10:00 UTC is 12 Midnight AEST
+  displayName: 'Daily Build'
+  branches:
+    include:
+    - master
 
 steps:
 - task: DotNetCoreCLI@2
