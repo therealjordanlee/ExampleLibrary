@@ -38,5 +38,5 @@ steps:
   inputs:
     command: 'test'
     projects: |
-      Tests/**/*.csproj
+      tests/**/*.csproj
     arguments: '--collect "Code coverage"'
