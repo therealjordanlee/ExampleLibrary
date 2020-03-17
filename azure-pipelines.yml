@@ -1,3 +1,4 @@
+# Run pipeline whenever a commit or tag is pushed
 trigger:
   branches:
     include:
@@ -5,20 +6,43 @@ trigger:
   tags:
     include: 
     - '*'
+
+# Run pipeline whenever a PR is raised
 pr:
   branches:
     include:
     - '*'
+
+# Run pipeline everyday. Azure DevOps schedules follow UTC
+# We build master on daily
 schedules:
-- cron: "0 10 * * *" # 10:00 UTC is 12 Midnight AEST
+- cron: "0 14 * * *" # 00:00 AEST is 14:00 UTC
   displayName: 'Daily Build'
   branches:
     include:
     - master
 
+variables:
+  BuildConfiguration: release
+
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'Restore'
+  displayName: 'dotnet restore'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: |
+      tests/**/*.csproj
+      arguments: '--collect "Code coverage"
