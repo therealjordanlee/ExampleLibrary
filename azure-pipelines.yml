@@ -83,10 +83,10 @@ steps:
     versionEnvVar: 'PACKAGE_VERSION'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Push to GitHub Package Registry'
+  displayName: 'Push to GitHub Packages'
   condition: startsWith(variables['build.sourceBranch'], 'refs/tags/') # Only run this step when the trigger event is a tag push
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'github.com_therealjordanlee'
+    publishFeedCredentials: 'GitHub Packages'
