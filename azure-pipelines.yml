@@ -49,6 +49,7 @@ steps:
 
 
 - task: PowerShell@2
+  name: 'semver'
   displayName: 'Check Tag conforms to SemVer'
   condition: startsWith(variables['build.sourceBranch'], 'refs/tags/') # Only run this step when the trigger event is a tag push
   inputs:
@@ -74,7 +75,9 @@ steps:
       }
 
 - task: DotNetCoreCLI@2
+  name: 'pack'
   displayName: 'Pack'
+  dependsOn: 'semver'
   condition: startsWith(variables['build.sourceBranch'], 'refs/tags/') # Only run this step when the trigger event is a tag push
   inputs:
     command: 'pack'
@@ -84,6 +87,7 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Push to GitHub Packages'
+  dependsOn: 'pack'
   condition: startsWith(variables['build.sourceBranch'], 'refs/tags/') # Only run this step when the trigger event is a tag push
   inputs:
     command: 'push'
