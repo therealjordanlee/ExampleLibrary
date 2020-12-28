@@ -13,7 +13,7 @@ namespace ExampleLibraryTests
         [InlineData(5, 6, 11)]
         public void Add_Returns_Expected_Value(int x, int y, int expectedResult)
         {
-            var actualResult = _calculator.Add(x, y);
+            var actualResult = Calculator.Add(x, y);
             Assert.Equal(actualResult, expectedResult);
         }
 
@@ -23,7 +23,7 @@ namespace ExampleLibraryTests
         [InlineData(7, 3, 4)]
         public void Subtract_Returns_ExpectedValue(int x, int y, int expectedResult)
         {
-            var actualResult = _calculator.Subtract(x, y);
+            var actualResult = Calculator.Subtract(x, y);
             Assert.Equal(actualResult, expectedResult);
         }
     }
