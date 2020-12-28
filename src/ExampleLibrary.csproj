@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RepositoryUrl>https://github.com/therealjordanlee/ExampleLibrary</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
